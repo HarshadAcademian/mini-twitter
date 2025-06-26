@@ -37,7 +37,7 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const userResult = await pool.query('SELECT * FROM "USER" WHERE USER_EMAIL = $1 AND USER_IS_DELETED = 0', [email]);
+    const userResult = await pool.query('SELECT * FROM "USER" WHERE USER_EMAIL = $1 AND IS_DELETED = 0', [email]);
 
     if (userResult.rows.length === 0) {
       return res.status(400).json({ error: 'User not found' });
@@ -84,7 +84,7 @@ exports.softDeleteUser = async (req, res) => {
 
   try {
     await pool.query(
-      'UPDATE "USER" SET USER_IS_DELETED = 1 WHERE USER_ID = $1',
+      'UPDATE "USER" SET IS_DELETED = 1 WHERE USER_ID = $1',
       [userId]
     );
     res.json({ message: 'Account has been deleted (soft deleted)' });
