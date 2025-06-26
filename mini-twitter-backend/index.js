@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({origin:"http://13.60.195.223"}));
+app.use(cors());
 app.use(bodyParser.json());
 
 // Base route for testing server status
