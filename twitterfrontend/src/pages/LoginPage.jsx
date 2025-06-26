@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiMail, FiLock } from 'react-icons/fi';
+import API_BASE_URL from '../config';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -15,7 +16,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/auth/login', formData);
+      const res = await axios.post(`${API_BASE_URL}/auth/login`, formData);
       localStorage.setItem('token', res.data.token);
       setMessage('Login successful!');
       navigate('/home');
@@ -29,7 +30,6 @@ const Login = () => {
       <div className="bg-white shadow-2xl rounded-xl p-8 w-full max-w-md">
         <h2 className="text-3xl font-bold text-center text-indigo-700 mb-6">Welcome!</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Email Field */}
           <div className="relative">
             <FiMail className="absolute top-3.5 left-3 text-gray-400" />
             <input
@@ -43,7 +43,6 @@ const Login = () => {
             />
           </div>
 
-          {/* Password Field */}
           <div className="relative">
             <FiLock className="absolute top-3.5 left-3 text-gray-400" />
             <input
@@ -57,7 +56,6 @@ const Login = () => {
             />
           </div>
 
-          {/* Login Button */}
           <button
             type="submit"
             className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition duration-200"
@@ -66,12 +64,10 @@ const Login = () => {
           </button>
         </form>
 
-        {/* Message */}
         {message && (
           <p className="mt-4 text-center text-sm text-red-600">{message}</p>
         )}
 
-        {/* Navigation Link */}
         <p className="mt-6 text-sm text-center text-gray-700">
           New here?{' '}
           <Link to="/signup" className="text-indigo-600 hover:underline font-medium">

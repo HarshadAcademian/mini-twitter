@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FiUser, FiMail, FiMapPin, FiLock } from 'react-icons/fi';
+import API_BASE_URL from '../config';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -36,7 +37,6 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validations
     if (formData.name.trim().length < 3) {
       setMessage('Name must be at least 3 characters long.');
       return;
@@ -54,7 +54,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/auth/signup', formData);
+      const res = await axios.post(`${API_BASE_URL}/auth/signup`, formData);
       setMessage(res.data.message || 'Signup successful!');
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
@@ -67,7 +67,6 @@ const Signup = () => {
       <div className="bg-white shadow-2xl rounded-xl p-8 w-full max-w-md">
         <h2 className="text-3xl font-bold text-center text-blue-700 mb-6">Create Account</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
           <div className="relative">
             <FiUser className="absolute top-3.5 left-3 text-gray-400" />
             <input
@@ -81,7 +80,6 @@ const Signup = () => {
             />
           </div>
 
-          {/* Email */}
           <div className="relative">
             <FiMail className="absolute top-3.5 left-3 text-gray-400" />
             <input
@@ -95,7 +93,6 @@ const Signup = () => {
             />
           </div>
 
-          {/* Location */}
           <div className="relative">
             <FiMapPin className="absolute top-3.5 left-3 text-gray-400" />
             <input
@@ -108,7 +105,6 @@ const Signup = () => {
             />
           </div>
 
-          {/* Password */}
           <div className="relative">
             <FiLock className="absolute top-3.5 left-3 text-gray-400" />
             <input
@@ -129,7 +125,6 @@ const Signup = () => {
             )}
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200"
@@ -138,10 +133,8 @@ const Signup = () => {
           </button>
         </form>
 
-        {/* Message */}
         {message && <p className="mt-4 text-center text-sm text-red-600">{message}</p>}
 
-        {/* Footer */}
         <p className="mt-6 text-sm text-center text-gray-700">
           Already have an account?{' '}
           <span

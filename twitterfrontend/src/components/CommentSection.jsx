@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaEdit, FaTrash, FaSave, FaTimes } from 'react-icons/fa';
+import API_BASE_URL from '../config'; // ✅ Import the base URL
 
 const CommentSection = ({ postId, token }) => {
   const [comments, setComments] = useState([]);
@@ -17,7 +18,7 @@ const CommentSection = ({ postId, token }) => {
   const fetchComments = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`http://localhost:5000/posts/${postId}/comments`, { headers });
+      const res = await axios.get(`${API_BASE_URL}/posts/${postId}/comments`, { headers });
       setComments(res.data.comments);
     } catch (err) {
       console.error('Error fetching comments:', err);
@@ -37,7 +38,7 @@ const CommentSection = ({ postId, token }) => {
 
     try {
       await axios.post(
-        `http://localhost:5000/posts/${postId}/comments`,
+        `${API_BASE_URL}/posts/${postId}/comments`,
         { content: newComment },
         { headers }
       );
@@ -60,7 +61,7 @@ const CommentSection = ({ postId, token }) => {
 
     try {
       await axios.put(
-        `http://localhost:5000/posts/comments/${id}`,
+        `${API_BASE_URL}/posts/comments/${id}`,
         { content: editContent },
         { headers }
       );
@@ -80,7 +81,7 @@ const CommentSection = ({ postId, token }) => {
 
   const deleteComment = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/posts/comments/${id}`, { headers });
+      await axios.delete(`${API_BASE_URL}/posts/comments/${id}`, { headers });
       setActionError('');
       fetchComments();
     } catch (err) {

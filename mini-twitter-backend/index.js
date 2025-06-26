@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({origin:"http://13.60.195.223"}));
 app.use(bodyParser.json());
 
 // Base route for testing server status
@@ -25,6 +25,7 @@ app.use('/auth', authRoutes);    // Auth routes: /auth/signup, /auth/login, /aut
 app.use('/posts', postRoutes);   // Posts routes: /posts
 // app.use('/comments', commentRoutes);
 
-app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ Server running on http://0.0.0.0:${PORT}`);
 });
+
